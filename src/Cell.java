@@ -1,7 +1,7 @@
 public class Cell
 {
     //later add plant stuff if time
-    
+
     private boolean hasAnimal;
     private Animal animal;
 
@@ -18,12 +18,20 @@ public class Cell
 
     public Animal getOccupant()
     {
+
         return animal;
     }
 
     public void setOccupant(Animal animal)
     {
         this.animal = animal;
+        hasAnimal = true;
+    }
+
+    public void removeOccupant()
+    {
+        animal = null;
+        hasAnimal = false;
     }
 
 
