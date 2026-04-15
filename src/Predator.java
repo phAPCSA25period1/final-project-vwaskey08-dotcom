@@ -1,9 +1,17 @@
-public class Predator extends Animal {
+public class Predator extends Animal
+{
 
-    private int xPos;
-    private int yPos;
+    /* ATTRIBUTES */
+    private int row;
+    private int col;
 
-    public Predator(int xPos, int yPos) {
-        super(xPos, yPos);
+
+    /**
+     * Constructor
+     * @param row
+     * @param col
+     */
+    public Predator(int row, int col) {
+        super(row, col);
     }
 }

@@ -1,10 +1,16 @@
 public class Prey extends Animal
 {
-    private int xPos;
-    private int yPos;
+    /* ATTRIBUTES */
+    private int row;
+    private int col;
 
-    public Prey(int xPos, int yPos) {
-        super(xPos, yPos);
+    /**
+     * Constructor
+     * @param row
+     * @param col
+     */
+    public Prey(int row, int col) {
+        super(row, col);
     }
 
 }

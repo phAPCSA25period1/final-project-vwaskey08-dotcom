@@ -1,9 +1,17 @@
-public class Simulation {
+public class Simulation
+{
+    /* ATTRIBUTES */
+
     private Cell[][] world;
     private int day;
 
-    // later can add more customization
 
+     /* METHODS */
+
+    // later can add more customization
+    /**
+     * Constructor
+     */
     public Simulation() {
         day = 1;
         world = new Cell[10][10];
@@ -18,30 +26,81 @@ public class Simulation {
 
     }
 
-    public void setWorld() {
+
+    /**
+     * Sets up the world with random placement of predators and prey
+     */
+    public void setWorld()
+    {
+
+        //declaring and intializaing variable
         int preyCount = 25;
         int predCount = 25;
-        int randRow;
-        int randCol;
+        int row;
+        int col;
 
+        //placing a predator or prey
         while (preyCount + predCount > 0) {
-            randRow = (int) (Math.random() * (10 ));
-            randCol = (int) (Math.random() * (10 ));
 
-            if (world[randRow][randCol].isEmpty() && (preyCount + predCount) % 2 == 0) {
-                world[randRow][randCol].setOccupant(new Prey(randCol, randRow));
+            row = (int) (Math.random() * 10);
+            col = (int) (Math.random() * 10);
+
+            if (world[row][col].isEmpty() && (preyCount + predCount) % 2 == 0)
+            {
+
+                world[row][col].setOccupant(new Prey(row, col));
                 preyCount--;
 
             }
-            else if (world[randRow][randCol].isEmpty())
+            else if (world[row][col].isEmpty())
             {
-                world[randRow][randCol].setOccupant(new Predator(randCol, randRow));
+                world[row][col].setOccupant(new Predator(row, col));
                 predCount--;
             }
 
         }
 
     }
+
+    /**
+     * Printing out the simulated world
+     */
+
+    public void printWorld()
+    {
+        //delcaring and intializing the print out
+        String printedWorld = "\n";
+
+        //iterating through the array and identifying the predator prey and empty
+        for (int i = 0; i < world.length; i++)
+        {
+            for (int j = 0; j < world[0].length; j++)
+            {
+
+                // github copilot suggested the instanceof when i got an error
+                if (world[i][j].getOccupant()!= null && world[i][j].getOccupant() instanceof Prey)
+                {
+                    printedWorld += "S  ";
+                }
+                else if (world[i][j].getOccupant()!= null && world[i][j].getOccupant() instanceof Predator)
+                {
+                    printedWorld += "W  ";
+                }
+                else
+                {
+                    printedWorld += ".  ";
+                }
+
+            }
+
+            //goes to the next line below
+            printedWorld += "\n";
+        }
+
+        System.out.println(printedWorld);
+    }
+
+
 
     // add ending logic in another method
 
@@ -63,36 +122,5 @@ public class Simulation {
     //     }
 
     // }
-
-    public void printWorld()
-    {
-        String printedWorld = "";
-
-        for (int i = 0; i < world.length; i++)
-        {
-            for (int j = 0; j < world[0].length; j++)
-            {
-
-                // github copilot suggested this, ive never seen instance of before
-                if (world[i][j].getOccupant()!= null && world[i][j].getOccupant() instanceof Prey)
-                {
-                    printedWorld += "S  ";
-                }
-                else if (world[i][j].getOccupant()!= null && world[i][j].getOccupant() instanceof Predator)
-                {
-                    printedWorld += "W  ";
-                }
-                else
-                {
-                    printedWorld += ".  ";
-                }
-
-            }
-
-            printedWorld += "\n";
-        }
-
-        System.out.println(printedWorld);
-    }
 
 }
