@@ -4,6 +4,8 @@ public class App {
         Simulation sim = new Simulation();
 
         sim.setWorld();
-        sim.printWorld();
+      sim.printWorld();
+
+        sim.advanceDay();
     }
 }

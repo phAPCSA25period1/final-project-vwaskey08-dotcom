@@ -1,11 +1,5 @@
 public class Animal
 {
-    /*
-    TO DO:
-
-    Do i actually need the x and y position? idk yet we'll see ig
-
-    */
 
     /* ATTRIBUTES */
 
@@ -51,22 +45,46 @@ public class Animal
      * @param xPos
      * @param yPos
      */
-    public void move(int row, int col)
+    public void move(Cell[][] world)
     {
-        this.row = row;
-        this.col = col;
+        int surroundCol = (int)(Math.random() * (col + 1 - col - 1 + 1) + (col - 1));
+
+        if (surroundCol > world.length)
+        {
+            surroundCol = world.length - 1;
+        }
+
+        int surroundRow = (int)(Math.random() * (row + 1 - row - 1 + 1) + (row - 1));
+        if(surroundRow > world[0].length)
+        {
+            surroundRow = world[0].length - 1;
+        }
+
+        if(world[surroundCol][surroundRow].isEmpty())
+        {
+
+            col = surroundCol;
+            row = surroundRow;
+
+        }
+
     }
 
 
-        /* GETTERS */
+    /* GETTERS */
 
     /**
      * gets the positon of the animal
      * @return the postion
      */
-    public String getPos()
+    public int getRow()
     {
-        return "(" + row +", " + col + ")";
+        return row;
+    }
+
+    public int getCol()
+    {
+        return col;
     }
 
 

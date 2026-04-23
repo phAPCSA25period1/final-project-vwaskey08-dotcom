@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Simulation
 {
     /* ATTRIBUTES */
@@ -34,8 +36,8 @@ public class Simulation
     {
 
         //declaring and intializaing variable
-        int preyCount = 25;
-        int predCount = 25;
+        int preyCount = 1;
+        int predCount = 1;
         int row;
         int col;
 
@@ -104,23 +106,78 @@ public class Simulation
 
     // add ending logic in another method
 
-    // public void advanceDay() {
-    //     String continueInput;
-    //     Scanner input = new Scanner(System.in);
+    public void advanceDay() {
 
-    //     while (continueInput != "e") {
-    //         System.out.println("Day: " + day + ". Enter to continue, 'e' to exit");
+        String continueInput = "";
+        Scanner input = new Scanner(System.in);
 
-    //         continueInput = input.nextLine();
+        while (continueInput != "e")
+        {
+            System.out.println("Day: " + day + ". Enter to continue, 'e' to exit");
 
-    //         if (continueInput.equals("e")) {
-    //             System.out.println("You have exited the simulation.");
-    //             break;
-    //         } else if (continueInput.equals(null)) {
-    //             day++;
-    //         }
-    //     }
+            continueInput = input.nextLine();
 
-    // }
+            if (continueInput.equals("e"))
+            {
+
+                System.out.println("You have exited the simulation.");
+                break;
+
+            }
+
+            movingAnimals();
+        }
+
+
+
+    }
+
+    public void movingAnimals()
+    {
+        //this makes sure that everysingle animal moves in the world
+        for (Cell[] arr : world)
+            {
+                for(Cell cell : arr)
+                {
+                    if (cell.getOccupant() != null)
+                    {
+                        System.out.println("The animal at " + cell.getOccupant().getCol() + cell.getOccupant().getRow());
+                         cell.getOccupant().move(world);
+                         System.out.println("Has moved to" + cell.getOccupant().getCol() + cell.getOccupant().getRow());
+
+                    }
+
+                }
+            }
+
+            Cell[][] tempCells = world;
+
+            for (int i = 0; i < world.length; i ++)
+            {
+                for(int j = 0; j < world[0].length; j ++)
+                {
+                    if(tempCells[i][j].getOccupant() != null)
+                    {
+
+                        //check each real row and real column position in the temporary array
+                        //then set the old position to empty
+                        //the set the real value of the world
+
+                        int tempCol = tempCells[i][j].getOccupant().getCol();
+                        int tempRow = tempCells[i][j].getOccupant().getRow();
+
+                        world[tempCol][tempRow].removeOccupant();
+                        System.out.println("An animal has been removed from row: " + tempRow + " column: " + tempCol);
+
+
+                        world[tempCol][tempRow].setOccupant(tempCells[i][j].getOccupant());
+                       System.out.println("An animal has been added to row: " + tempRow + " column: " + tempCol);
+
+                    }
+
+                }
+            }
+
+    }
 
 }
