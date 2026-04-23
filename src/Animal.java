@@ -45,28 +45,46 @@ public class Animal
      * @param xPos
      * @param yPos
      */
-    public void move(Cell[][] world)
+    public void move(Cell[][] world, Animal animal, int i, int j)
     {
-        int surroundCol = (int)(Math.random() * (col + 1 - col - 1 + 1) + (col - 1));
-
-        if (surroundCol > world.length)
+        int newRow = (int)(Math.random() * (row + 1 - row + 1) + (col - 1));
+        if (newRow > world.length)
         {
-            surroundCol = world.length - 1;
+            newRow = world.length - 1;
+        }
+        else if (newRow < 0)
+        {
+            newRow = 0;
         }
 
-        int surroundRow = (int)(Math.random() * (row + 1 - row - 1 + 1) + (row - 1));
-        if(surroundRow > world[0].length)
+        int newCol = (int)(Math.random() * (col + 1 - col - 1 + 1) + (col - 1));
+        if (newCol > world[0].length)
         {
-            surroundRow = world[0].length - 1;
+            newCol = world[0].length;
+        }
+        else if (newCol < 0 )
+        {
+            newCol = 0;
         }
 
-        if(world[surroundCol][surroundRow].isEmpty())
+        if(animal.equals(null))
         {
 
-            col = surroundCol;
-            row = surroundRow;
+            Animal tempAnimal = animal;
+
+            world[i][j].removeOccupant();
+            if(world[newRow][newCol].getOccupant().equals(null))
+            {
+                world[newRow][newCol].setOccupant(tempAnimal);
+            }
+            else
+            {
+                world[i][j].setOccupant(tempAnimal);
+            }
 
         }
+
+
 
     }
 
