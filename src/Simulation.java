@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Simulation {
@@ -92,23 +93,30 @@ public class Simulation {
         String continueInput = "";
         Scanner input = new Scanner(System.in);
 
+        ArrayList<Animal> animals = new ArrayList<>();
+
         while (!continueInput.equals("e")) {
+
+            animals.clear(); // looked this up
             System.out.println("Day: " + day + ". Enter to continue, 'e' to exit");
 
             continueInput = input.nextLine();
 
-            for (int i = 0; i < world.length; i++)
-            {
-                for(int j = 0; j < world[0].length; j++)
-                {
-                    if(world[i][j].getOccupant()!=(null))
+            for (int i = 0; i < world.length; i++) {
+                for (int j = 0; j < world[0].length; j++) {
+                    if (world[i][j].getOccupant() != (null))
                     {
-                        world[i][j].getOccupant().move(world, world[i][j].getOccupant(), i, j);
-                    }
 
+                        animals.add(world[i][j].getOccupant());
+                    }
 
                 }
             }
+
+            for (Animal creature : animals) {
+                creature.move(world);
+            }
+
             printWorld();
             day++;
         }
@@ -119,45 +127,49 @@ public class Simulation {
 
     // public void movingAnimals()
     // {
-    //     // this makes sure that everysingle animal moves in the world
-    //     for (Cell[] arr : world) {
-    //         for (Cell cell : arr) {
-    //             if (cell.getOccupant() != null) {
-    //                 System.out.println("The animal at " + cell.getOccupant().getCol() + cell.getOccupant().getRow());
-    //                 cell.getOccupant().move(world);
-    //                 System.out.println("Has moved to" + cell.getOccupant().getCol() + cell.getOccupant().getRow());
+    // // this makes sure that everysingle animal moves in the world
+    // for (Cell[] arr : world) {
+    // for (Cell cell : arr) {
+    // if (cell.getOccupant() != null) {
+    // System.out.println("The animal at " + cell.getOccupant().getCol() +
+    // cell.getOccupant().getRow());
+    // cell.getOccupant().move(world);
+    // System.out.println("Has moved to" + cell.getOccupant().getCol() +
+    // cell.getOccupant().getRow());
 
-    //             }
+    // }
 
-    //         }
-    //     }
+    // }
+    // }
 
-    //     Cell[][] tempCells = world;
+    // Cell[][] tempCells = world;
 
-    //     for (int i = 0; i < world.length; i++) {
-    //         for (int j = 0; j < world[0].length; j++) {
-    //             if (tempCells[i][j].getOccupant() != null) {
+    // for (int i = 0; i < world.length; i++) {
+    // for (int j = 0; j < world[0].length; j++) {
+    // if (tempCells[i][j].getOccupant() != null) {
 
-    //                 // check each real row and real column position in the temporary array
-    //                 // then set the old position to empty
-    //                 // the set the real value of the world
+    // // check each real row and real column position in the temporary array
+    // // then set the old position to empty
+    // // the set the real value of the world
 
-    //                 int tempCol = tempCells[i][j].getOccupant().getCol();
-    //                 int tempRow = tempCells[i][j].getOccupant().getRow();
+    // int tempCol = tempCells[i][j].getOccupant().getCol();
+    // int tempRow = tempCells[i][j].getOccupant().getRow();
 
-    //                 world[tempCol][tempRow].removeOccupant();
-    //                 System.out.println("An animal has been removed from row: " + tempRow + " column: " + tempCol);
+    // world[tempCol][tempRow].removeOccupant();
+    // System.out.println("An animal has been removed from row: " + tempRow + "
+    // column: " + tempCol);
 
-    //                 world[tempCol][tempRow].setOccupant(tempCells[i][j].getOccupant());
-    //                 System.out.println("An animal has been added to row: " + tempRow + " column: " + tempCol);
+    // world[tempCol][tempRow].setOccupant(tempCells[i][j].getOccupant());
+    // System.out.println("An animal has been added to row: " + tempRow + " column:
+    // " + tempCol);
 
-    //             }
+    // }
 
-    //         }
-    //     }
+    // }
+    // }
 
-    //     printWorld();
-    //     day ++;
+    // printWorld();
+    // day ++;
 
     // }
 
