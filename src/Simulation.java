@@ -31,8 +31,8 @@ public class Simulation {
     public void setWorld() {
 
         // declaring and intializaing variable
-        int preyCount = 1;
-        int predCount = 1;
+        int preyCount = 5;
+        int predCount = 5;
         int row;
         int col;
 
@@ -61,6 +61,9 @@ public class Simulation {
      */
 
     public void printWorld() {
+        int numSheep = 0;
+        int numWolves = 0;
+
         // delcaring and intializing the print out
         String printedWorld = "\n";
 
@@ -71,8 +74,12 @@ public class Simulation {
                 // github copilot suggested the instanceof when i got an error
                 if (world[i][j].getOccupant() != null && world[i][j].getOccupant() instanceof Prey) {
                     printedWorld += "S  ";
+                    numSheep ++;
+
                 } else if (world[i][j].getOccupant() != null && world[i][j].getOccupant() instanceof Predator) {
                     printedWorld += "W  ";
+                    numWolves++;
+
                 } else {
                     printedWorld += ".  ";
                 }
@@ -84,6 +91,8 @@ public class Simulation {
         }
 
         System.out.println(printedWorld);
+        System.out.println("Number of Sheep: " + numSheep);;
+        System.out.println("Number of Wolves: " + numWolves);
     }
 
     // add ending logic in another method

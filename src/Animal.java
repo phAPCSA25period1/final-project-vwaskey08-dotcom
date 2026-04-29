@@ -30,6 +30,147 @@ public class Animal
 
     }
 
+    /* WILL GET MORE ATTENTION NEXT SPRINT */
+    /**
+     * moves the animal
+     * @param world
+     */
+    public void move(Cell[][] world)
+    {
+        int newRow = returnNewRow(world);
+
+        int newCol = returnNewCol(world);
+
+        if(this != null) //if animal isn't null
+        {
+            //removes the animal from the cell
+
+            world[this.getRow()][this.getCol()].removeOccupant();
+
+            if(world[newRow][newCol].isEmpty()) //if the new place is empty set it there and update row and columm
+            {
+                world[newRow][newCol].setOccupant(this);
+                row = newRow;
+                col = newCol;
+            }
+
+            else if(this.getClass() == world[newRow][newCol].getOccupant().getClass())
+            {
+                //reproduce
+                reproduce(world, newRow, newCol);
+
+            }
+
+            else //just stay in the same spot
+            {
+                world[this.getRow()][this.getCol()].setOccupant(this);
+            }
+
+        }
+
+    }
+
+    /**
+     * all the if and else stuff for reproduction
+     * @param world
+     * @param newRow
+     * @param newCol
+     */
+    public void reproduce(Cell[][] world, int newRow, int newCol)
+    {
+
+        int babyRow = 0;
+        int babyCol = 0;
+
+        if (newRow > row)
+        {
+                babyRow = (int)(Math.random() * ((newRow+1) - (row - 1) + 1) + (row - 1));
+
+            if (newCol > col)
+            {
+
+                    babyCol = (int)(Math.random() * ((newCol + 1) - (col - 1) + 1) + (col - 1));
+            }
+            else
+            {
+
+                    babyCol = (int)(Math.random() * ((col + 1) - (newCol - 1) + 1) + (newCol - 1));
+            }
+        }
+        else
+        {
+                babyRow = (int)(Math.random() * ((row+1) - (newRow - 1) + 1) + (newRow - 1));
+
+            if (newCol > col)
+            {
+
+                    babyCol = (int)(Math.random() * ((newCol + 1) - (col - 1) + 1) + (col - 1));
+            }
+            else
+            {
+
+                    babyCol = (int)(Math.random() * ((col + 1) - (newCol - 1) + 1) + (newCol - 1));
+            }
+        }
+
+        if(world[babyRow][babyCol].isEmpty())
+        {
+            if(this instanceof Prey)
+            {
+                world[babyRow][babyCol].setOccupant(new Prey(babyRow, babyCol));
+                System.out.println("New sheep!");
+
+            }
+            else
+            {
+                world[babyRow][babyCol].setOccupant(new Predator(babyRow, babyCol));
+                System.out.println("New wolf!");
+            }
+
+        }
+    }
+
+    /**
+     * just to clean up my move method, lots of if and else statements
+     * @param world
+     * @return newRow
+     */
+    public int returnNewRow (Cell[][] world)
+    {
+        int newRow = (int)(Math.random() *  ((row + 1) - (row - 1 ) + 1) + (row - 1) );
+        if (newRow > world.length - 1)
+        {
+            newRow = world.length - 1;
+        }
+        else if (newRow < 0)
+        {
+            newRow = 0;
+        }
+        return newRow;
+    }
+
+    /**
+     *just to clean up my move method, lots of if and else statements
+     * @param world
+     * @return newCol
+     */
+    public int returnNewCol(Cell[][] world)
+    {
+        int newCol = (int)(Math.random() *  ((col + 1) - (col - 1 ) + 1) + (col - 1) );
+        if (newCol > world[0].length - 1)
+        {
+            newCol = world[0].length - 1;
+        }
+        else if (newCol < 0 )
+        {
+            newCol = 0;
+        }
+
+        return newCol;
+    }
+
+
+
      /**
      * checks if the animal is alive
      * @return the status of alive
@@ -47,67 +188,6 @@ public class Animal
         energy -= 10;
     }
 
-    /* WILL GET MORE ATTENTION NEXT SPRINT */
-    /**
-     * moves the animal
-     * @param xPos
-     * @param yPos
-     */
-    public void move(Cell[][] world)
-    {
-
-        int newRow = (int)(Math.random() *  ((row + 1) - (row - 1 ) + 1) + (row - 1) );
-        if (newRow > world.length - 1)
-        {
-            newRow = world.length - 1;
-        }
-        else if (newRow < 0)
-        {
-            newRow = 0;
-        }
-
-        int newCol = (int)(Math.random() *  ((col + 1) - (col - 1 ) + 1) + (col - 1) );
-        if (newCol > world[0].length - 1)
-        {
-            newCol = world[0].length - 1;
-        }
-        else if (newCol < 0 )
-        {
-            newCol = 0;
-        }
-
-        if(this != null)
-        {
-
-            world[this.getRow()][this.getCol()].removeOccupant();
-            if(world[newRow][newCol].getOccupant() == null)
-            {
-                world[newRow][newCol].setOccupant(this);
-                row = newRow;
-                col = newCol;
-            }
-            // else if(world[newRow][newCol].getOccupant() != null)
-            // {
-            //     if(this.getClass() == world[newRow][newCol].getOccupant().getClass())
-            //     {
-            //         //reproduce
-
-            //     }
-            //     else
-            //     {
-            //         //eat
-            //     }
-            // }
-            else
-            {
-                world[this.getRow()][this.getCol()].setOccupant(this);
-            }
-
-        }
-
-    }
-
-
     /* GETTERS */
 
     /**
@@ -123,7 +203,6 @@ public class Animal
     {
         return col;
     }
-
 
     /**
      * checks the energy of the animal
