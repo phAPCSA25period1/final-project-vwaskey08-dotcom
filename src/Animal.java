@@ -36,7 +36,15 @@ public class Animal
      */
     public boolean isAlive()
     {
-        return alive;
+        return energy > 0;
+    }
+
+    /**
+     * subtracts energy after one day
+     */
+    public void nextDay()
+    {
+        energy -= 10;
     }
 
     /* WILL GET MORE ATTENTION NEXT SPRINT */
@@ -78,13 +86,24 @@ public class Animal
                 row = newRow;
                 col = newCol;
             }
+            // else if(world[newRow][newCol].getOccupant() != null)
+            // {
+            //     if(this.getClass() == world[newRow][newCol].getOccupant().getClass())
+            //     {
+            //         //reproduce
+
+            //     }
+            //     else
+            //     {
+            //         //eat
+            //     }
+            // }
             else
             {
                 world[this.getRow()][this.getCol()].setOccupant(this);
             }
 
         }
-
 
     }
 
@@ -115,15 +134,6 @@ public class Animal
         return energy;
     }
 
-
-    /**
-     * gets the age of the animal
-     * @return age
-     */
-    public int getAge()
-    {
-        return age;
-    }
 
 
 }
