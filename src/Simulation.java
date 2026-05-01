@@ -137,6 +137,7 @@ public class Simulation {
             {
 
                  animals.get(i).move(world);
+                //  animals.get(i).reproduce(world);
 
             }
 
