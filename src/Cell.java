@@ -5,6 +5,7 @@ public class Cell
     private boolean hasAnimal;
     private Animal animal;
     private boolean hasPlant;
+    private int plantStatus;
 
 
     /* METHODS */
@@ -17,6 +18,8 @@ public class Cell
         hasAnimal = false;
         animal = null;
         hasPlant = true;
+        plantStatus = 5;
+
     }
 
 
@@ -28,13 +31,33 @@ public class Cell
      */
     public boolean hasPlant()
     {
-        return hasPlant;
+        if(plantStatus > 0)
+        {
+            return hasPlant;
+        }
+        else
+        {
+            hasPlant = false;
+            return hasPlant;
+        }
+
     }
 
     public void removePlant()
     {
         hasPlant = false;
     }
+
+    public void eatPlant()
+    {
+        plantStatus --;
+    }
+
+    public void growPlant()
+    {
+        plantStatus ++;
+    }
+
 
     /* ANIMAL METHODS */
 

@@ -2,9 +2,6 @@ public class Predator extends Animal
 {
 
     /* ATTRIBUTES */
-    private int row;
-    private int col;
-    private int energy;
 
 
     /**
@@ -19,6 +16,10 @@ public class Predator extends Animal
     @Override
     public void move(Cell[][] world)
     {
+        if (this.getEnergy() > 50)
+        {
+             reproduce(world);
+        }
         if(!hunt(world))
         {
             super.move(world);
@@ -28,50 +29,81 @@ public class Predator extends Animal
 
     public boolean hunt(Cell[][] world)
     {
-        boolean eaten = false;
-
-        int newRow = returnNewRow(world);
-        int newCol = returnNewCol(world);
-        // if the random spot has a prey
-        if(world[newRow][newCol].getOccupant() instanceof Predator)
+        for(int preyRow = this.getRow() - 1; preyRow <= this.getRow() + 1; preyRow++)
         {
-            world[newRow][newCol].removeOccupant();
-            world[newRow][newCol].setOccupant(this);
-            row = newRow;
-            col = newCol;
-
-            energy += 10;
-
-            eaten = true;
-            System.out.println("One less sheep...");
-        }
-
-        return eaten;
-    }
-
-    public Animal reproduce(Cell[][] world)
-    {
-        
-        for(int babyRow = row - 1; babyRow <= row + 1; babyRow++)
-        {
-            for(int babyCol = col - 1; babyCol <= col + 1; babyCol++)
+            for(int preyCol = this.getCol() - 1; preyCol <= this.getCol() + 1; preyCol++)
             {
 
                 //better way to check conditions?
-                if(babyRow < 0 || babyCol < 0 || babyRow > world.length - 1 || (babyCol > world[0].length - 1))
+                if(preyRow < 0 || preyCol < 0 || preyRow > world.length - 1 || (preyCol > world[0].length - 1))
                 {
                     continue;
                 }
-                else if(world[babyRow][babyCol].isEmpty())
+                else if(world[preyRow][preyCol].getOccupant() instanceof Prey)
                 {
-                    world[babyRow][babyCol].setOccupant(new Predator(babyRow, babyCol));
+                    world[preyRow][preyCol].removeOccupant();
+                    this.addEnergy(20);
+                    System.out.println("A Sheep has been eaten.");
 
-                    return world[babyRow][babyCol].getOccupant();
+                    return true;
                 }
 
             }
         }
 
-        return null;
+        return false;
+
+    }
+
+    public int reproduce(Cell[][] world)
+    {
+
+        //check first if there are neighbors around to reproduce,
+
+        for(int mateRow = this.getRow() - 1; mateRow <= this.getRow() + 1; mateRow++)
+        {
+            for(int mateCol = this.getCol() - 1; mateCol <= this.getCol() + 1; mateCol++)
+            {
+
+                //better way to check conditions?
+                if(mateCol < 0 || mateRow < 0 || mateRow > world.length - 1 || ( mateCol > world[0].length - 1))
+                {
+                    continue;
+                }
+                else if(world[mateRow][mateCol].getOccupant() instanceof Predator)
+                {
+
+                    for(int babyRow = this.getRow() - 1; babyRow <= this.getRow() + 1; babyRow++)
+                    {
+                        for(int babyCol = this.getCol() - 1; babyCol <= this.getCol() + 1; babyCol++)
+                        {
+
+                            //better way to check conditions?
+                            if(babyRow < 0 || babyCol < 0 || babyRow > world.length - 1 || (babyCol > world[0].length - 1))
+                            {
+                                continue;
+                            }
+                            else if(world[babyRow][babyCol].isEmpty())
+                            {
+                                world[babyRow][babyCol].setOccupant(new Predator(babyRow, babyCol));
+                                this.reproductionEnergy();
+                                System.out.println("A Wolf has been born!");
+
+                                return 0;
+                            }
+
+                        }
+                    }
+
+
+                }
+
+            }
+        }
+
+        return 0;
+
+
+
     }
 }
