@@ -1,14 +1,19 @@
+
+/**
+ * Manages the individual Cells of the simulation, both Animals and Plants
+ */
 public class Cell
 {
 
     /* ATTRIBUTES */
     private boolean hasAnimal;
     private Animal animal;
-    private boolean hasPlant;
+    private boolean canEatPlant;
     private int plantStatus;
+    private int plantGrowthCoolDown;
 
 
-    /* METHODS */
+    /* CONSTRUCTOR */
 
     /**
      * Constructor for cell
@@ -17,45 +22,62 @@ public class Cell
     {
         hasAnimal = false;
         animal = null;
-        hasPlant = true;
-        plantStatus = 5;
+        canEatPlant = true;
+        plantStatus = 3;
+        plantGrowthCoolDown = 3;
 
     }
+
+
+    /* METHODS */
 
 
     /* PLANT METHODS */
 
     /**
+     * Eats part of a plant, if possible, begins coolDown
+     */
+    public void eatPlant()
+    {
+        if(canEatPlant())
+        {
+            plantStatus--;
+            plantGrowthCoolDown = 3;
+        }
+    }
+
+    /**
      * Checks whether a spot has a plant
      * @return whether the spot has a plant
      */
-    public boolean hasPlant()
+    public boolean canEatPlant()
     {
         if(plantStatus > 0)
         {
-            return hasPlant;
+            return canEatPlant;
         }
         else
         {
-            hasPlant = false;
-            return hasPlant;
+            canEatPlant = false;
+            return canEatPlant;
         }
 
     }
 
-    public void removePlant()
+    /**
+     * Plant activites over one day
+     */
+    public void nextDay()
     {
-        hasPlant = false;
-    }
+        if(plantGrowthCoolDown >= 0)
+        {
+            plantGrowthCoolDown--;
+        }
+        else
+        {
+            plantStatus ++;
+        }
 
-    public void eatPlant()
-    {
-        plantStatus --;
-    }
-
-    public void growPlant()
-    {
-        plantStatus ++;
     }
 
 
@@ -101,3 +123,38 @@ public class Cell
 
 
 }
+
+
+
+/*EXTRA METHODS UNUSED*/
+
+// public int getPlantStatus()
+    // {
+    //     return plantStatus;
+    // }
+
+
+
+
+    // public void setPlantGrowthCoolDown()
+    // {
+    //     plantGrowthCoolDown = 3;
+    // }
+
+
+
+    // public void growPlant()
+    // {
+    //     if (plantGrowthCoolDown == 0)
+    //     {
+    //          plantStatus ++;
+    //     }
+
+    // }
+
+
+    // public void removePlant()
+    // {
+    //     hasPlant = false;
+    // }
+

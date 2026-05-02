@@ -1,8 +1,13 @@
+/**
+ * Predator extends the Animal class
+ *
+ * @author Violet Waskey
+ * @version 1.0
+ */
 public class Predator extends Animal
 {
 
-    /* ATTRIBUTES */
-
+    /* CONSTRUCTOR */
 
     /**
      * Constructor
@@ -13,13 +18,19 @@ public class Predator extends Animal
         super(row, col);
     }
 
+    /**
+     * Overidden move
+     * @param world
+     */
     @Override
     public void move(Cell[][] world)
     {
+        //must be at least 50 energy to reproduce
         if (this.getEnergy() > 50)
         {
              reproduce(world);
         }
+        //if hunt has not suceeded
         if(!hunt(world))
         {
             super.move(world);
@@ -27,6 +38,12 @@ public class Predator extends Animal
 
     }
 
+    /**
+     * Hunt prey in neighboring cells
+     *
+     * @param world
+     * @return wether hunt was sucessful and affects movement
+     */
     public boolean hunt(Cell[][] world)
     {
         for(int preyRow = this.getRow() - 1; preyRow <= this.getRow() + 1; preyRow++)
@@ -34,7 +51,7 @@ public class Predator extends Animal
             for(int preyCol = this.getCol() - 1; preyCol <= this.getCol() + 1; preyCol++)
             {
 
-                //better way to check conditions?
+                //make sure its not out of bounds
                 if(preyRow < 0 || preyCol < 0 || preyRow > world.length - 1 || (preyCol > world[0].length - 1))
                 {
                     continue;
@@ -42,6 +59,9 @@ public class Predator extends Animal
                 else if(world[preyRow][preyCol].getOccupant() instanceof Prey)
                 {
                     world[preyRow][preyCol].removeOccupant();
+                    world[this.getRow()][this.getCol()].removeOccupant();
+                    world[preyRow][preyCol].setOccupant(this);
+
                     this.addEnergy(20);
                     System.out.println("A Sheep has been eaten.");
 
@@ -55,55 +75,69 @@ public class Predator extends Animal
 
     }
 
+    //more efficent way to manage all these for loops and if else statements?
+    /**
+     * Manages reproduction
+     * @param world
+     * @return used just to exit loops
+     */
     public int reproduce(Cell[][] world)
     {
 
-        //check first if there are neighbors around to reproduce,
-
-        for(int mateRow = this.getRow() - 1; mateRow <= this.getRow() + 1; mateRow++)
+        if(this.getReproductionCoolDown() == 0)
         {
-            for(int mateCol = this.getCol() - 1; mateCol <= this.getCol() + 1; mateCol++)
+            //check first if there are neighbors around to reproduce,
+            for(int mateRow = this.getRow() - 1; mateRow <= this.getRow() + 1; mateRow++)
             {
-
-                //better way to check conditions?
-                if(mateCol < 0 || mateRow < 0 || mateRow > world.length - 1 || ( mateCol > world[0].length - 1))
-                {
-                    continue;
-                }
-                else if(world[mateRow][mateCol].getOccupant() instanceof Predator)
+                for(int mateCol = this.getCol() - 1; mateCol <= this.getCol() + 1; mateCol++)
                 {
 
-                    for(int babyRow = this.getRow() - 1; babyRow <= this.getRow() + 1; babyRow++)
+                    //makes sure its not out of bounds
+                    if(mateCol < 0 || mateRow < 0 || mateRow > world.length - 1 || ( mateCol > world[0].length - 1))
                     {
-                        for(int babyCol = this.getCol() - 1; babyCol <= this.getCol() + 1; babyCol++)
+                        continue;
+                    }
+                    else if(world[mateRow][mateCol].getOccupant() instanceof Predator)
+                    {
+
+                        //now set a place for the baby
+                        for(int babyRow = this.getRow() - 1; babyRow <= this.getRow() + 1; babyRow++)
                         {
-
-                            //better way to check conditions?
-                            if(babyRow < 0 || babyCol < 0 || babyRow > world.length - 1 || (babyCol > world[0].length - 1))
+                            for(int babyCol = this.getCol() - 1; babyCol <= this.getCol() + 1; babyCol++)
                             {
-                                continue;
-                            }
-                            else if(world[babyRow][babyCol].isEmpty())
-                            {
-                                world[babyRow][babyCol].setOccupant(new Predator(babyRow, babyCol));
-                                this.reproductionEnergy();
-                                System.out.println("A Wolf has been born!");
 
-                                return 0;
-                            }
+                                //makes sure its not out of bounds
+                                if(babyRow < 0 || babyCol < 0 || babyRow > world.length - 1 || (babyCol > world[0].length - 1))
+                                {
+                                    continue;
+                                }
+                                else if(world[babyRow][babyCol].isEmpty())
+                                {
+                                    world[babyRow][babyCol].setOccupant(new Predator(babyRow, babyCol));
+                                    this.subtractEnergy(20);
+                                    this.reproduce();
 
+                                    world[mateRow][mateCol].getOccupant().subtractEnergy(20);
+                                    world[mateRow][mateCol].getOccupant().reproduce();
+
+
+                                    System.out.println("A Wolf has been born!");
+
+                                    return 0;
+                                }
+
+                            }
                         }
+
+
                     }
 
-
                 }
-
             }
+
+            return 0;
         }
-
         return 0;
-
-
 
     }
 }
