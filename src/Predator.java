@@ -26,7 +26,7 @@ public class Predator extends Animal
     public void move(Cell[][] world)
     {
         //must be at least 50 energy to reproduce
-        if (this.getEnergy() > 50)
+        if (this.getEnergy() > 70)
         {
              reproduce(world);
         }
@@ -114,10 +114,10 @@ public class Predator extends Animal
                                 else if(world[babyRow][babyCol].isEmpty())
                                 {
                                     world[babyRow][babyCol].setOccupant(new Predator(babyRow, babyCol));
-                                    this.subtractEnergy(20);
+                                    this.subtractEnergy(50);
                                     this.reproduce();
 
-                                    world[mateRow][mateCol].getOccupant().subtractEnergy(20);
+                                    world[mateRow][mateCol].getOccupant().subtractEnergy(50);
                                     world[mateRow][mateCol].getOccupant().reproduce();
 
 

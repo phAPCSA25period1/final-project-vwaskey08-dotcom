@@ -5,7 +5,7 @@
 public class Cell
 {
 
-    //no plant status?
+  //PLANTS DON"T REGROW AHHHHHHHHHHHHHH
 
     /* ATTRIBUTES */
     private boolean hasAnimal;
@@ -25,7 +25,7 @@ public class Cell
         hasAnimal = false;
         animal = null;
         canEatPlant = true;
-        plantStatus = false;
+        isEaten = false;
         plantGrowthCoolDown = 0;
 
     }
@@ -54,15 +54,19 @@ public class Cell
      */
     public boolean canEatPlant()
     {
-        if(isEaten)
+        if(plantGrowthCoolDown > 0)
         {
             canEatPlant = false;
             return canEatPlant;
         }
-        else
+        else if(plantGrowthCoolDown <= 0)
         {
+            canEatPlant = true;
             return canEatPlant;
         }
+
+        canEatPlant = false;
+        return canEatPlant;
 
     }
 

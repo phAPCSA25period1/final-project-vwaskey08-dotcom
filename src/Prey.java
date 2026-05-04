@@ -80,7 +80,7 @@ public class Prey extends Animal
                         this.setCol(plantCol);
 
                         world[this.getRow()][this.getCol()].eatPlant();
-                        this.addEnergy(10);
+                        this.addEnergy(20);
                         System.out.println("A Sheep has Eaten a Plant");
 
                         return true;
@@ -133,9 +133,9 @@ public class Prey extends Animal
                                 else if(world[babyRow][babyCol].isEmpty())
                                 {
                                     world[babyRow][babyCol].setOccupant(new Prey(babyRow, babyCol));
-                                    this.subtractEnergy(20);
+                                    this.subtractEnergy(50);
                                     this.reproduce();
-                                    world[mateRow][mateCol].getOccupant().subtractEnergy(20);
+                                    world[mateRow][mateCol].getOccupant().subtractEnergy(50);
                                     world[mateRow][mateCol].getOccupant().reproduce();
 
                                     System.out.println("A Sheep has been born!");
