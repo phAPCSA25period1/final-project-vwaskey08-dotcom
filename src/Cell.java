@@ -5,11 +5,13 @@
 public class Cell
 {
 
+    //no plant status?
+
     /* ATTRIBUTES */
     private boolean hasAnimal;
     private Animal animal;
     private boolean canEatPlant;
-    private int plantStatus;
+    private boolean isEaten;
     private int plantGrowthCoolDown;
 
 
@@ -23,8 +25,8 @@ public class Cell
         hasAnimal = false;
         animal = null;
         canEatPlant = true;
-        plantStatus = 3;
-        plantGrowthCoolDown = 3;
+        plantStatus = false;
+        plantGrowthCoolDown = 0;
 
     }
 
@@ -41,7 +43,7 @@ public class Cell
     {
         if(canEatPlant())
         {
-            plantStatus--;
+            isEaten = true;
             plantGrowthCoolDown = 3;
         }
     }
@@ -52,13 +54,13 @@ public class Cell
      */
     public boolean canEatPlant()
     {
-        if(plantStatus > 0)
+        if(isEaten)
         {
+            canEatPlant = false;
             return canEatPlant;
         }
         else
         {
-            canEatPlant = false;
             return canEatPlant;
         }
 
@@ -75,7 +77,7 @@ public class Cell
         }
         else
         {
-            plantStatus ++;
+            isEaten = false;
         }
 
     }
