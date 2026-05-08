@@ -1,19 +1,28 @@
+
+//* IMPORTS */
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
-
+/**
+ * SimulationPanel class handles the movement of the simulation
+ *
+ * @author Violet Waskey
+ * @version 1.0
+ */
 public class SimulationPanel extends JPanel
 {
 
     /* ATTRIBUTES */
+
     private Cell[][] world;
     private int cellSize;
 
 
-    //setsize customizable based on user input?
+    /* CONSTRUCTOR */
+
     /**
      * Constructor for simulation panel
      * @param world
@@ -25,6 +34,10 @@ public class SimulationPanel extends JPanel
         setPreferredSize(new Dimension(world[0].length * cellSize, world.length * cellSize));
 
     }
+
+
+
+    /* METHODS */
 
     //proteted reccomended by claude: this class and any subclass can access it
     @Override
@@ -67,7 +80,5 @@ public class SimulationPanel extends JPanel
             }
         }
     }
-
-
 
 }

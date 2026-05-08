@@ -1,5 +1,5 @@
 
-//imports
+/* IMPORTS */
 import java.util.ArrayList;
 
 /**
@@ -14,12 +14,12 @@ public class Simulation {
 
     /* ATTRIBUTES */
 
-    private Cell[][] world;
+    private final Cell[][] world;
     private int day;
     private int preyCount;
     private int predCount;
-    private int rows;
-    private int cols;
+    private final int rows;
+    private final int cols;
     private ArrayList<Animal> animals;
 
 
@@ -39,6 +39,7 @@ public class Simulation {
         cols = 10;
         rows = 10;
         animals = new ArrayList<>();
+
 
         for (int i = 0; i < world.length; i++) {
             for (int j = 0; j < world[0].length; j++) {
@@ -82,11 +83,6 @@ public class Simulation {
     /* METHODS */
 
 
-    public Cell[][] getWorld()
-    {
-        return world;
-    }
-
     /**
      * Sets up the world with random placement of predators and prey
      */
@@ -120,56 +116,17 @@ public class Simulation {
     }
 
     /**
-     * Printing out the simulated world
+     * Printing out the simulated world information
+     * Should i do some method encapsulation?
      */
-    public void printWorld() {
+    public void printWorldInfo()
+    {
 
-        int numSheep = 0;
-        int numWolves = 0;
+        System.out.println("Number of Sheep: " + preyCount);
+        System.out.println("Number of Wolves: " + predCount);
 
-
-        // delcaring and intializing the print out
-        String printedWorld = "\n";
-
-        // iterating through the array and identifying the predator prey and empty
-        for (int i = 0; i < world.length; i++) {
-            for (int j = 0; j < world[0].length; j++) {
-
-                // github copilot suggested the instanceof when i got an error
-                if (world[i][j].getOccupant() != null && world[i][j].getOccupant() instanceof Prey)
-                {
-                    printedWorld += "S  ";
-                    numSheep ++;
-
-                }
-                else if (world[i][j].getOccupant() != null && world[i][j].getOccupant() instanceof Predator)
-                {
-                    printedWorld += "W  ";
-                    numWolves++;
-
-                }
-                else if(world[i][j].canEatPlant())
-                {
-                    printedWorld += ":  ";
-                }
-                else
-                {
-                    printedWorld += ".  ";
-                }
-
-            }
-
-            // goes to the next line below
-            printedWorld += "\n";
-        }
-
-        System.out.println(printedWorld);
-        System.out.println("Number of Sheep: " + numSheep);
-        System.out.println("Number of Wolves: " + numWolves);
 
     }
-
-    // add ending logic in another method
 
     /**
      * Advancing the day through manaing printing and other daily updates
@@ -178,49 +135,105 @@ public class Simulation {
     {
 
         //reset the arrayList (looked up this method, super useful)
-                animals.clear();
+        animals.clear();
 
-                //iterate through every index finding the animals and managing the plants
-                for (int i = 0; i < world.length; i++)
+        //iterate through every index finding the animals and managing the plants
+        for (int i = 0; i < world.length; i++)
+        {
+            for (int j = 0; j < world[0].length; j++) {
+
+                //managing plants, growing if can and managing the cooldwon
+                world[i][j].nextDay();
+
+
+                //identifying the animals, removing the dead ones and adding the live ones to the array list
+                if (world[i][j].getOccupant() != (null))
                 {
-                    for (int j = 0; j < world[0].length; j++) {
-
-                        //managing plants, growing if can and managing the cooldwon
-                        world[i][j].nextDay();
-
-
-                        //identifying the animals, removing the dead ones and adding the live ones to the array list
-                        if (world[i][j].getOccupant() != (null))
-                        {
-                            if(!world[i][j].getOccupant().isAlive())
-                            {
-                                world[i][j].removeOccupant();
-                            }
-                            else
-                            {
-                                animals.add(world[i][j].getOccupant());
-                            }
-
-                        }
-
+                    if(!world[i][j].getOccupant().isAlive())
+                    {
+                        world[i][j].removeOccupant();
                     }
+                    else
+                    {
+                        animals.add(world[i][j].getOccupant());
+                    }
+
                 }
 
-                    //now going through the array list and managing movement and other daily things
-                    for (int i = 0; i < animals.size(); i++)
-                    {
+            }
+        }
 
-                        animals.get(i).move(world);
-                        animals.get(i).nextDay();
+        predCount = 0;
+        preyCount =0;
+        //now going through the array list and managing movement and other daily things
+        for (int i = 0; i < animals.size(); i++)
+        {
+
+            if(animals.get(i) instanceof Predator)
+            {
+                predCount++;
+            }
+            else
+            {
+                preyCount++;
+            }
+
+            animals.get(i).move(world);
+            animals.get(i).nextDay();
 
 
-                    }
+        }
 
-                day++;
+        day++;
+        printWorldInfo();
 
 
 
     }
+
+
+
+    /* METHODS */
+
+
+
+    /**
+     * gets number of prey
+     * @return preyCount
+     */
+    public int getPreyCount()
+    {
+        return preyCount;
+    }
+
+    /**
+     * gets number of predators
+     * @return predCount
+     */
+    public int getPredCount()
+    {
+        return predCount;
+    }
+
+    /**
+     * gets day
+     * @return day
+     */
+    public int getDay()
+    {
+        return day;
+    }
+
+    /**
+     * gets world
+     * @return world
+     */
+    public Cell[][] getWorld()
+    {
+        return world;
+    }
+
+
 
 }
 // //imports

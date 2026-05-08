@@ -6,6 +6,13 @@
       "name": "App",
       "request": "launch",
       "mainClass": "App",
+      "projectName": "final-project-vwaskey08-dotcom_ad6ad184"
+    },
+    {
+      "type": "java",
+      "name": "App",
+      "request": "launch",
+      "mainClass": "App",
       "projectName": "final-project-vwaskey08-dotcom_7bde24be"
     },
     {

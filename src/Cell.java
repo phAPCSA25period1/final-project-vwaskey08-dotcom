@@ -5,7 +5,6 @@
 public class Cell
 {
 
-  //PLANTS DON"T REGROW AHHHHHHHHHHHHHH
 
     /* ATTRIBUTES */
     private boolean hasAnimal;
