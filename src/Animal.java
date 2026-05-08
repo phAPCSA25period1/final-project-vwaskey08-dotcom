@@ -1,4 +1,4 @@
-
+//accidentally made them immortal, gotta fix that
 /**
  * Creates the basic Animal with basic methods and constructors
  *
@@ -14,6 +14,7 @@ public class Animal
     private int col;
     private int reproductionCoolDown;
     private int energy;
+    private int age;
 
 
 
@@ -28,8 +29,8 @@ public class Animal
     {
         this.row = row;
         this.col = col;
-
-        reproductionCoolDown = 3;
+        age = 0;
+        reproductionCoolDown = 0;
         energy = 100;
 
     }
@@ -93,6 +94,7 @@ public class Animal
     {
         energy -= 10;
         nextDayReproductionCoolDown();
+        age ++;
     }
 
     /**
@@ -157,7 +159,8 @@ public class Animal
      */
     public boolean isAlive()
     {
-        return energy > 0;
+        return energy > 0 && age < 15;
+
     }
 
     /**
@@ -186,6 +189,15 @@ public class Animal
     public int getCol()
     {
         return col;
+    }
+
+    /**
+     * gets the age of the animal
+     * @return the age
+     */
+    public int getAge()
+    {
+        return age;
     }
 
 

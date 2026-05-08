@@ -84,7 +84,7 @@ public class Predator extends Animal
     public int reproduce(Cell[][] world)
     {
 
-        if(this.getReproductionCoolDown() == 0)
+        if(this.getReproductionCoolDown() == 0 && this.getEnergy() > 40)
         {
             //check first if there are neighbors around to reproduce,
             for(int mateRow = this.getRow() - 1; mateRow <= this.getRow() + 1; mateRow++)
@@ -114,10 +114,10 @@ public class Predator extends Animal
                                 else if(world[babyRow][babyCol].isEmpty())
                                 {
                                     world[babyRow][babyCol].setOccupant(new Predator(babyRow, babyCol));
-                                    this.subtractEnergy(50);
+                                    this.subtractEnergy(30);
                                     this.reproduce();
 
-                                    world[mateRow][mateCol].getOccupant().subtractEnergy(50);
+                                    world[mateRow][mateCol].getOccupant().subtractEnergy(30);
                                     world[mateRow][mateCol].getOccupant().reproduce();
 
 

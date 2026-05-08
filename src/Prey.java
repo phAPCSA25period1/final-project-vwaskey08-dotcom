@@ -51,7 +51,7 @@ public class Prey extends Animal
         if(world[this.getRow()][this.getCol()].canEatPlant())
         {
             world[this.getRow()][this.getCol()].eatPlant();
-            this.addEnergy(10);
+            this.addEnergy(20);
 
 
             return false;
@@ -104,7 +104,7 @@ public class Prey extends Animal
     {
 
         //makes sure cooldown has finished
-        if(this.getReproductionCoolDown() == 0)
+        if(this.getReproductionCoolDown() == 0 && this.getEnergy() > 20)
         {
 
             for(int mateRow = this.getRow() - 1; mateRow <= this.getRow() + 1; mateRow++)
@@ -133,9 +133,9 @@ public class Prey extends Animal
                                 else if(world[babyRow][babyCol].isEmpty())
                                 {
                                     world[babyRow][babyCol].setOccupant(new Prey(babyRow, babyCol));
-                                    this.subtractEnergy(50);
+                                    this.subtractEnergy(30);
                                     this.reproduce();
-                                    world[mateRow][mateCol].getOccupant().subtractEnergy(50);
+                                    world[mateRow][mateCol].getOccupant().subtractEnergy(30);
                                     world[mateRow][mateCol].getOccupant().reproduce();
 
                                     System.out.println("A Sheep has been born!");

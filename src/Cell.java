@@ -11,7 +11,6 @@ public class Cell
     private boolean hasAnimal;
     private Animal animal;
     private boolean canEatPlant;
-    private boolean isEaten;
     private int plantGrowthCoolDown;
 
 
@@ -25,7 +24,6 @@ public class Cell
         hasAnimal = false;
         animal = null;
         canEatPlant = true;
-        isEaten = false;
         plantGrowthCoolDown = 0;
 
     }
@@ -43,8 +41,7 @@ public class Cell
     {
         if(canEatPlant())
         {
-            isEaten = true;
-            plantGrowthCoolDown = 3;
+            plantGrowthCoolDown = 5;
         }
     }
 
@@ -78,10 +75,6 @@ public class Cell
         if(plantGrowthCoolDown >= 0)
         {
             plantGrowthCoolDown--;
-        }
-        else
-        {
-            isEaten = false;
         }
 
     }
