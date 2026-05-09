@@ -33,7 +33,7 @@ public class Predator extends Animal
     public void move(Cell[][] world)
     {
         //must be at least 50 energy to reproduce
-        if (this.getEnergy() > 40)
+        if (this.getEnergy() > 60)
         {
              reproduce(world);
         }
@@ -53,7 +53,7 @@ public class Predator extends Animal
     @Override
     public boolean isAlive()
     {
-        if(this.getAge() < 15)
+        if(this.getAge() < 15 && this.getEnergy() > 0)
         {
             return super.isAlive();
         }
@@ -67,7 +67,8 @@ public class Predator extends Animal
 
     }
 //maybe wider raidus for move to look for sheep
-//everyone keeps moving to the top left
+//ADD SOMETHING SO AFTER THREE DAYS NO FOOD DIES VERY QUICKLY
+
 
     /**
      * Hunt prey in neighboring cells
@@ -191,7 +192,7 @@ public class Predator extends Animal
                             this.reproduceEnergy();
 
                             world[potentialMates.get(0).getRow()][potentialMates.get(0).getCol()].getOccupant().subtractEnergy(30);
-                            world[potentialMates.get(0).getRow()][potentialMates.get(0).getCol()].getOccupant().reproduce();
+                            world[potentialMates.get(0).getRow()][potentialMates.get(0).getCol()].getOccupant().reproduceEnergy();
 
 
                             System.out.println("A Wolf has been born!");

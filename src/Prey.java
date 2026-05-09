@@ -50,7 +50,7 @@ public class Prey extends Animal
     @Override
     public boolean isAlive()
     {
-        if (this.getAge() < 12)
+        if (this.getAge() < 12 && this.getEnergy() > 0)
         {
             return super.isAlive();
         }
@@ -172,7 +172,7 @@ public class Prey extends Animal
                                     this.subtractEnergy(30);
                                     this.reproduceEnergy();
                                     world[potentialMates.get(0).getRow()][potentialMates.get(0).getCol()].getOccupant().subtractEnergy(30);
-                                    world[potentialMates.get(0).getRow()][potentialMates.get(0).getCol()].getOccupant().reproduce();
+                                    world[potentialMates.get(0).getRow()][potentialMates.get(0).getCol()].getOccupant().reproduceEnergy();
 
                                     System.out.println("A Sheep has been born!");
                                     return 0;
