@@ -1,4 +1,5 @@
 //accidentally made them immortal, gotta fix that
+
 /**
  * Creates the basic Animal with basic methods and constructors
  *
@@ -45,6 +46,7 @@ public class Animal
      */
     public void move(Cell[][] world)
     {
+
         //the random new row and new column
 
         int newRow = genRandCoor(world, row, world.length);
@@ -53,6 +55,7 @@ public class Animal
         //if the new place is empty set it there and update row and columm
         if(world[newRow][newCol].isEmpty())
         {
+
             //removes from old cell
             world[this.getRow()][this.getCol()].removeOccupant();
 
@@ -63,6 +66,8 @@ public class Animal
             row = newRow;
             col = newCol;
         }
+
+
 
     }
 
@@ -134,7 +139,7 @@ public class Animal
     /**
      * Sets reproduction cooldown
      */
-    public void reproduce()
+    public void reproduceEnergy()
     {
         reproductionCoolDown = 3;
     }
@@ -154,22 +159,17 @@ public class Animal
 
 
     /**
-     * checks if the animal is alive
-     * @return the status of alive
-     */
-    public boolean isAlive()
-    {
-        return energy > 0 && age < 15;
-
-    }
-
-    /**
      * checks the energy of the animal
      * @return energy
      */
     public int getEnergy()
     {
         return energy;
+    }
+
+    public boolean isAlive()
+    {
+        return energy > 0;
     }
 
 

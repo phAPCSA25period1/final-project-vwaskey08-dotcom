@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Collections;
+
 /**
  * Predator extends the Animal class
  *
@@ -6,6 +9,10 @@
  */
 public class Predator extends Animal
 {
+
+    //the wolves never win, there is a problem in my logic OMG THE WOLVES WIN
+    //make better ending logic
+    //make a better ending summation
 
     /* CONSTRUCTOR */
 
@@ -26,7 +33,7 @@ public class Predator extends Animal
     public void move(Cell[][] world)
     {
         //must be at least 50 energy to reproduce
-        if (this.getEnergy() > 70)
+        if (this.getEnergy() > 40)
         {
              reproduce(world);
         }
@@ -38,6 +45,30 @@ public class Predator extends Animal
 
     }
 
+
+    /**
+     * checks if the animal is alive
+     * @return the status of alive
+     */
+    @Override
+    public boolean isAlive()
+    {
+        if(this.getAge() < 15)
+        {
+            return super.isAlive();
+        }
+        else
+        {
+             return false;
+        }
+
+
+
+
+    }
+//maybe wider raidus for move to look for sheep
+//everyone keeps moving to the top left
+
     /**
      * Hunt prey in neighboring cells
      *
@@ -46,6 +77,9 @@ public class Predator extends Animal
      */
     public boolean hunt(Cell[][] world)
     {
+        ArrayList<Animal> potentialPrey = new ArrayList<>();
+
+
         for(int preyRow = this.getRow() - 1; preyRow <= this.getRow() + 1; preyRow++)
         {
             for(int preyCol = this.getCol() - 1; preyCol <= this.getCol() + 1; preyCol++)
@@ -58,20 +92,40 @@ public class Predator extends Animal
                 }
                 else if(world[preyRow][preyCol].getOccupant() instanceof Prey)
                 {
-                    world[preyRow][preyCol].removeOccupant();
-                    world[this.getRow()][this.getCol()].removeOccupant();
-                    world[preyRow][preyCol].setOccupant(this);
 
-                    this.addEnergy(20);
-                    System.out.println("A Sheep has been eaten.");
+                    potentialPrey.add(world[preyRow][preyCol].getOccupant());
 
-                    return true;
+
                 }
 
             }
         }
 
+        //so I noticed that the movement kept going to the top left because it would check that
+        //index first, so I asked for tips to randomize movement better and I got suggested
+        //creating an arraylist and using shuffle, so then its more accurately random
+        if(potentialPrey.size() >= 1)
+        {
+
+            Collections.shuffle(potentialPrey);
+
+            world[potentialPrey.get(0).getRow()][potentialPrey.get(0).getCol()].removeOccupant();
+            world[this.getRow()][this.getCol()].removeOccupant();
+            world[potentialPrey.get(0).getRow()][potentialPrey.get(0).getCol()].setOccupant(this);
+            this.setCol(potentialPrey.get(0).getCol());
+            this.setRow(potentialPrey.get(0).getRow());
+
+            this.addEnergy(40);
+            System.out.println("A Sheep has been eaten.");
+
+
+            return true;
+        }
+
+
         return false;
+
+
 
     }
 
@@ -84,7 +138,9 @@ public class Predator extends Animal
     public int reproduce(Cell[][] world)
     {
 
-        if(this.getReproductionCoolDown() == 0 && this.getEnergy() > 40)
+        ArrayList<Animal> potentialMates = new ArrayList<>();
+
+        if(this.getReproductionCoolDown() == 0)
         {
             //check first if there are neighbors around to reproduce,
             for(int mateRow = this.getRow() - 1; mateRow <= this.getRow() + 1; mateRow++)
@@ -100,42 +156,58 @@ public class Predator extends Animal
                     else if(world[mateRow][mateCol].getOccupant() instanceof Predator)
                     {
 
-                        //now set a place for the baby
-                        for(int babyRow = this.getRow() - 1; babyRow <= this.getRow() + 1; babyRow++)
-                        {
-                            for(int babyCol = this.getCol() - 1; babyCol <= this.getCol() + 1; babyCol++)
-                            {
-
-                                //makes sure its not out of bounds
-                                if(babyRow < 0 || babyCol < 0 || babyRow > world.length - 1 || (babyCol > world[0].length - 1))
-                                {
-                                    continue;
-                                }
-                                else if(world[babyRow][babyCol].isEmpty())
-                                {
-                                    world[babyRow][babyCol].setOccupant(new Predator(babyRow, babyCol));
-                                    this.subtractEnergy(30);
-                                    this.reproduce();
-
-                                    world[mateRow][mateCol].getOccupant().subtractEnergy(30);
-                                    world[mateRow][mateCol].getOccupant().reproduce();
-
-
-                                    System.out.println("A Wolf has been born!");
-
-                                    return 0;
-                                }
-
-                            }
-                        }
-
+                        //add to arraylist here
+                        potentialMates.add(world[mateRow][mateCol].getOccupant());
 
                     }
 
                 }
             }
 
-            return 0;
+            //add arraylist thing here
+
+            if(potentialMates.size() >= 1)
+            {
+
+                Collections.shuffle(potentialMates);
+
+                //now set a place for the baby
+                for(int babyRow = this.getRow() - 1; babyRow <= this.getRow() + 1; babyRow++)
+                {
+                    for(int babyCol = this.getCol() - 1; babyCol <= this.getCol() + 1; babyCol++)
+                    {
+
+                        //makes sure its not out of bounds
+                        if(babyRow < 0 || babyCol < 0 || babyRow > world.length - 1 || (babyCol > world[0].length - 1))
+                        {
+                            continue;
+                        }
+                        else if(world[babyRow][babyCol].isEmpty())
+                        {
+                            //add arraylist here
+
+                            world[babyRow][babyCol].setOccupant(new Predator(babyRow, babyCol));
+                            this.subtractEnergy(30);
+                            this.reproduceEnergy();
+
+                            world[potentialMates.get(0).getRow()][potentialMates.get(0).getCol()].getOccupant().subtractEnergy(30);
+                            world[potentialMates.get(0).getRow()][potentialMates.get(0).getCol()].getOccupant().reproduce();
+
+
+                            System.out.println("A Wolf has been born!");
+
+                            return 0;
+
+                        }
+
+                    }
+                }
+
+
+
+            }
+
+
         }
         return 0;
 

@@ -4,6 +4,7 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Scanner;
+
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
@@ -16,9 +17,6 @@ import javax.swing.Timer;
 
 public class App
 {
-    /* git config --global user.email "you@example.com"
-  git config --global user.name "Your Name" */
-
     /* ATTRIBUTES */
 
     static Timer[] timerWrapper = new Timer[1]; //claude reccomened work around so the simulation stops when one pop equals zero
@@ -155,7 +153,7 @@ public class App
                 panel.repaint();
 
                 //if any population gets to zero the simulation ends (maybe change?)
-                if (sim.getDay() > 1  && (sim.getPredCount() == 0 || sim.getPreyCount() == 0))
+                if ((sim.getPredCount() == 0 && sim.getPreyCount() == 0) || (sim.getPredCount() == (sim.getRows() * sim.getCols()) || sim.getPreyCount() == (sim.getRows() * sim.getCols())))
                 {
 
                     timerWrapper[0].stop();
