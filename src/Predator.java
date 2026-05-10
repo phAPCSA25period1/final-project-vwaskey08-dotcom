@@ -10,10 +10,6 @@ import java.util.Collections;
 public class Predator extends Animal
 {
 
-    //the wolves never win, there is a problem in my logic OMG THE WOLVES WIN
-    //make better ending logic
-    //make a better ending summation
-
     /* CONSTRUCTOR */
 
     /**
@@ -62,12 +58,7 @@ public class Predator extends Animal
              return false;
         }
 
-
-
-
     }
-//maybe wider raidus for move to look for sheep
-//ADD SOMETHING SO AFTER THREE DAYS NO FOOD DIES VERY QUICKLY
 
 
     /**
@@ -116,7 +107,7 @@ public class Predator extends Animal
             this.setCol(potentialPrey.get(0).getCol());
             this.setRow(potentialPrey.get(0).getRow());
 
-            this.addEnergy(40);
+            this.addEnergy(30);
             System.out.println("A Sheep has been eaten.");
 
 

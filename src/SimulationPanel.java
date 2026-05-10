@@ -3,7 +3,6 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-
 import javax.swing.JPanel;
 
 /**
@@ -59,7 +58,7 @@ public class SimulationPanel extends JPanel
 
                 if(world[i][j].getOccupant() instanceof Predator)
                 {
-                       g.setColor(Color.RED);
+                       g.setColor(new Color(128, 128, 128));
                 }
                 else if(world[i][j].getOccupant() instanceof Prey)
                 {
