@@ -32,7 +32,8 @@ Watch the simulation until one population completely takes over or simply close 
 
 
 ## 🔹 Class Diagram
-Include or link your final class diagram.
+<img width="1292" height="1676" alt="Image 5-10-26 at 10 45 AM" src="https://github.com/user-attachments/assets/74642832-ae48-4f9d-b101-c8b6ca44db2f" />
+
 
 ## 🔹 Known Limitations / Future Improvements
 The actual code works well and smoothly, especially because there is not a lot of user input.
