@@ -1,4 +1,4 @@
-//accidentally made them immortal, gotta fix that
+
 
 /**
  * Creates the basic Animal with basic methods and constructors

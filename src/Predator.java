@@ -1,3 +1,6 @@
+
+/* IMPORTS */
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -121,7 +124,6 @@ public class Predator extends Animal
 
     }
 
-    //more efficent way to manage all these for loops and if else statements?
     /**
      * Manages reproduction
      * @param world
@@ -148,7 +150,6 @@ public class Predator extends Animal
                     else if(world[mateRow][mateCol].getOccupant() instanceof Predator)
                     {
 
-                        //add to arraylist here
                         potentialMates.add(world[mateRow][mateCol].getOccupant());
 
                     }
@@ -156,7 +157,6 @@ public class Predator extends Animal
                 }
             }
 
-            //add arraylist thing here
 
             if(potentialMates.size() >= 1)
             {
@@ -176,7 +176,6 @@ public class Predator extends Animal
                         }
                         else if(world[babyRow][babyCol].isEmpty())
                         {
-                            //add arraylist here
 
                             world[babyRow][babyCol].setOccupant(new Predator(babyRow, babyCol));
                             this.subtractEnergy(30);

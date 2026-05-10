@@ -43,7 +43,7 @@ public class Prey extends Animal
 
     }
 
-      /**
+    /**
      * checks if the animal is alive
      * @return the status of alive
      */
@@ -69,7 +69,6 @@ public class Prey extends Animal
     public boolean feed(Cell[][] world)
     {
 
-
         if(world[this.getRow()][this.getCol()].canEatPlant())
         {
             world[this.getRow()][this.getCol()].eatPlant();
@@ -81,7 +80,7 @@ public class Prey extends Animal
         }
         else
         {
-//STILL NEED TO EDIT
+
             for(int plantRow = this.getRow() - 1; plantRow <= this.getRow() + 1; plantRow++)
             {
                 for(int plantCol = this.getCol() - 1; plantCol <= this.getCol() + 1; plantCol++)

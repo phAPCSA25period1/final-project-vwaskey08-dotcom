@@ -124,35 +124,3 @@ public class Cell
 
 
 
-/*EXTRA METHODS UNUSED*/
-
-// public int getPlantStatus()
-    // {
-    //     return plantStatus;
-    // }
-
-
-
-
-    // public void setPlantGrowthCoolDown()
-    // {
-    //     plantGrowthCoolDown = 3;
-    // }
-
-
-
-    // public void growPlant()
-    // {
-    //     if (plantGrowthCoolDown == 0)
-    //     {
-    //          plantStatus ++;
-    //     }
-
-    // }
-
-
-    // public void removePlant()
-    // {
-    //     hasPlant = false;
-    // }
-
